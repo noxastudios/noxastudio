@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Noxa Studio — Geliştirici Topluluğu</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Unbounded:wght@500;700;900&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <!-- SPACE BACKGROUND -->
+  <div class="space-background">
+    <div class="stars stars-1"></div>
+    <div class="stars stars-2"></div>
+    <div class="stars stars-3"></div>
+
+    <div class="nebula nebula-1"></div>
+    <div class="nebula nebula-2"></div>
+
+    <div class="grid-overlay"></div>
+  </div>
+
+  <!-- CURSOR GLOW -->
+  <div class="cursor-glow"></div>
+
+  <!-- HEADER -->
+  <header class="topbar">
+
+    <div class="wrap topbar__inner">
+
+      <a href="#" class="logo">
+        Noxa<span>Studio</span>
+      </a>
+
+      <nav class="nav">
+        <a href="#pano">Pano</a>
+        <a href="#kategoriler">Kategoriler</a>
+        <a href="#ilan-olustur">İlan Ver</a>
+      </nav>
+
+      <a
+        class="btn btn--discord"
+        href="https://discord.gg/QxwXSz8yK"
+        target="_blank"
+        rel="noopener"
+      >
+        <span>Discord'a Katıl</span>
+      </a>
+
+    </div>
+
+  </header>
+
+
+  <!-- HERO -->
+  <section class="hero">
+
+    <div class="hero-orbit orbit-1"></div>
+    <div class="hero-orbit orbit-2"></div>
+
+    <div class="wrap hero__grid">
+
+      <div class="hero__text">
+
+        <div class="status">
+          <span class="status-dot"></span>
+          NOXA STUDIO ONLINE
+        </div>
+
+        <p class="eyebrow">
+          GELİŞTİRİCİ EŞLEŞTİRME PLATFORMU
+        </p>
+
+        <h1>
+          Projen için
+          <span>doğru ekibi</span>
+          bul.
+        </h1>
+
+        <p class="lede">
+          Noxa Studio; oyun, Roblox, yazılım ve yaratıcı projelerde
+          geliştiricileri bir araya getiren modern bir topluluk platformudur.
+        </p>
+
+        <div class="hero__actions">
+
+          <a href="#ilan-olustur" class="btn btn--primary">
+            <span>İlan Oluştur</span>
+            <b>→</b>
+          </a>
+
+          <a
+            href="https://discord.gg/QxwXSz8yK"
+            target="_blank"
+            rel="noopener"
+            class="btn btn--ghost"
+          >
+            Topluluğa Katıl
+          </a>
+
+        </div>
+
+        <div class="hero-stats">
+
+          <div>
+            <strong id="postCount">0</strong>
+            <span>İlan</span>
+          </div>
+
+          <div>
+            <strong>4</strong>
+            <span>Kategori</span>
+          </div>
+
+          <div>
+            <strong>∞</strong>
+            <span>Proje</span>
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- CODE PANEL -->
+      <div class="hero__panel">
+
+        <div class="panel__bar">
+
+          <div class="window-buttons">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+
+          <small>noxa-studio.js</small>
+
+        </div>
+
+        <div class="panel__body">
+
+          <p>
+            <span class="ln">01</span>
+            <span class="purple">const</span>
+            project = {
+          </p>
+
+          <p>
+            <span class="ln">02</span>
+            &nbsp;&nbsp;team:
+            <em>"Noxa Studio"</em>,
+          </p>
+
+          <p>
+            <span class="ln">03</span>
+            &nbsp;&nbsp;status:
+            <b class="tag tag--dev">OPEN</b>
+          </p>
+
+          <p>
+            <span class="ln">04</span>
+            &nbsp;&nbsp;developers:
+            <em>∞</em>,
+          </p>
+
+          <p>
+            <span class="ln">05</span>
+            &nbsp;&nbsp;creativity:
+            <em>true</em>
+          </p>
+
+          <p>
+            <span class="ln">06</span>
+            };
+          </p>
+
+          <p class="cursor-line">
+            <span class="ln">07</span>
+            <span class="caret">_</span>
+          </p>
+
+        </div>
+
+        <div class="panel-status">
+          <span></span>
+          System operational
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- CATEGORIES -->
+  <section class="categories" id="kategoriler">
+
+    <div class="wrap">
+
+      <div class="section-heading">
+
+        <div>
+          <p class="eyebrow">YETENEKLER</p>
+          <h2>Ekibini oluştur.</h2>
+        </div>
+
+        <p>
+          Projene uygun uzmanlığı seç ve topluluğa katıl.
+        </p>
+
+      </div>
+
+
+      <div class="category-grid">
+
+        <button class="category-card" data-filter="ui">
+
+          <div class="category-icon">◈</div>
+
+          <div>
+            <strong>UI Designer</strong>
+            <span>Arayüz & UX</span>
+          </div>
+
+          <b>→</b>
+
+        </button>
+
+
+        <button class="category-card" data-filter="map">
+
+          <div class="category-icon">◇</div>
+
+          <div>
+            <strong>Map Designer</strong>
+            <span>Harita & World Building</span>
+          </div>
+
+          <b>→</b>
+
+        </button>
+
+
+        <button class="category-card" data-filter="script">
+
+          <div class="category-icon">{ }</div>
+
+          <div>
+            <strong>Scripter</strong>
+            <span>Lua & Yazılım</span>
+          </div>
+
+          <b>→</b>
+
+        </button>
+
+
+        <button class="category-card" data-filter="animator">
+
+          <div class="category-icon">✦</div>
+
+          <div>
+            <strong>Animator</strong>
+            <span>Animasyon & Motion</span>
+          </div>
+
+          <b>→</b>
+
+        </button>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- BOARD -->
+  <section class="board" id="pano">
+
+    <div class="wrap">
+
+      <div class="board__head">
+
+        <div>
+          <p class="eyebrow">TOPLULUK</p>
+          <h2>Pano</h2>
+        </div>
+
+        <div class="filters">
+
+          <button class="filter is-active" data-filter="all">
+            Tümü
+          </button>
+
+          <button class="filter" data-filter="dev">
+            Geliştirici Arıyorum
+          </button>
+
+          <button class="filter" data-filter="proj">
+            Proje Paylaşımı
+          </button>
+
+        </div>
+
+      </div>
+
+
+      <ul class="list" id="list"></ul>
+
+      <p class="empty" id="empty" hidden>
+        Henüz bu kategoride ilan yok.
+      </p>
+
+    </div>
+
+  </section>
+
+
+  <!-- CREATE POST -->
+  <section class="form-section" id="ilan-olustur">
+
+    <div class="wrap form-grid">
+
+      <div class="form-intro">
+
+        <p class="eyebrow">TOPLULUĞA KATIL</p>
+
+        <h2>
+          Bir sonraki
+          <span>projeni</span>
+          başlat.
+        </h2>
+
+        <p class="lede">
+          Projen için geliştirici arıyorsan veya kendi projenin
+          tanıtımını yapmak istiyorsan ilanını oluştur.
+        </p>
+
+        <div class="form-decoration">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+
+      </div>
+
+
+      <form id="post-form">
+
+        <div class="field-row">
+
+          <label>
+            <span>İlan Türü</span>
+
+            <select name="type" required>
+              <option value="dev">
+                Geliştirici Arıyorum
+              </option>
+
+              <option value="proj">
+                Proje Paylaşıyorum
+              </option>
+            </select>
+
+          </label>
+
+
+          <label>
+            <span>Kullanıcı Adı</span>
+
+            <input
+              type="text"
+              name="author"
+              placeholder="@kullaniciadi"
+              required
+            >
+
+          </label>
+
+        </div>
+
+
+        <label>
+
+          <span>Başlık</span>
+
+          <input
+            type="text"
+            name="title"
+            placeholder="Örn: Roblox FPS projesi için scripter arıyorum"
+            required
+          >
+
+        </label>
+
+
+        <label>
+
+          <span>Açıklama</span>
+
+          <textarea
+            name="desc"
+            rows="5"
+            placeholder="Kısaca projeyi veya aradığın kişiyi anlat."
+            required
+          ></textarea>
+
+        </label>
+
+
+        <button type="submit" class="btn btn--primary submit-btn">
+          <span>İlanı Yayınla</span>
+          <b>→</b>
+        </button>
+
+      </form>
+
+    </div>
+
+  </section>
+
+
+  <!-- FOOTER -->
+  <footer class="footer">
+
+    <div class="wrap footer__inner">
+
+      <div>
+        <strong>Noxa<span>Studio</span></strong>
+        <small>Geliştirici topluluğu.</small>
+      </div>
+
+      <a
+        href="https://discord.gg/QxwXSz8yK"
+        target="_blank"
+        rel="noopener"
+      >
+        discord.gg/QxwXSz8yK
+      </a>
+
+      <span>
+        © 2026 Noxa Studio
+      </span>
+
+    </div>
+
+  </footer>
+
+
+  <script src="script.js"></script>
+
+</body>
+</html>
