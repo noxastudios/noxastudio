@@ -7,9 +7,9 @@ const ADMIN_EMAILS = ["buraya-kendi-epostani-yaz@mail.com"];
 /* ===== Çeviriler ===== */
 const I18N = {
   tr: {
-    nav_home:"Ana Sayfa",nav_board:"Pano",nav_vid:"Videolar",nav_plug:"Pluginler",nav_comm:"Topluluk",login:"Giriş Yap",register:"Kayıt Ol",logout:"Çıkış",
-    pill:"Roblox Geliştirici Topluluğu",h1a:"Projelerinize",h1b:"ruh",h1c:"katan geliştiriciler.",
-    sub:"Noxa Studio; script, UI, model, animasyon ve plugin paylaşabileceğin ya da projen için geliştirici bulabileceğin bir topluluk.",
+    nav_home:"Ana Sayfa",nav_board:"Pano",nav_vid:"Videolar",nav_plug:"Pluginler",nav_comm:"Topluluk",nav_team:"Ekip",team_t:"Ekip",team_s:"Noxa Studio'yu oluşturan insanlar.",tm_name:"İsim",tm_role:"Rol (ör. Animatör)",tm_photo:"Profil fotoğrafı",no_team:"Henüz ekip üyesi eklenmedi.",login:"Giriş Yap",register:"Kayıt Ol",logout:"Çıkış",
+    pill:"Roblox Geliştirici Topluluğu",h1a:"Hayalindeki",h1b:"Roblox oyununu",h1c:"birlikte geliştirelim.",
+    sub:"Script, UI, model ve animasyon için doğru ekibi bul, projeni paylaş, topluluktan geri bildirim al.",
     cta1:"▶ Panoyu keşfet",chip:"⚡ Gerçek paylaşımlar",
     sec_t:"Bölümler",sec_s:"İhtiyacın olan bölüme geç.",s_board:"Topluluk Panosu",s_board_d:"Proje paylaş, geliştirici ara.",
     s_vid:"Videolar",s_vid_d:"Duyurular ve eğitim videoları.",s_plug:"Pluginler",s_plug_d:"Noxa'nın kendi Roblox Studio pluginleri.",
@@ -29,9 +29,9 @@ const I18N = {
     cats:{animation:["Animasyon","Karakter, emote, savaş animasyonları"],script:["Script","Lua sistemleri ve modüller"],model:["3D Model","Mesh, prop ve haritalar"],ui:["UI / GUI","Arayüz ve menü tasarımları"],vfx:["VFX","Efekt ve partikül sistemleri"],project:["Projeler","Tam oyun ve proje paylaşımları"],plugin:["Plugin","Roblox Studio pluginleri"]}
   },
   en: {
-    nav_home:"Home",nav_board:"Board",nav_vid:"Videos",nav_plug:"Plugins",nav_comm:"Community",login:"Log In",register:"Sign Up",logout:"Log out",
-    pill:"Roblox Developer Community",h1a:"Developers who give",h1b:"soul",h1c:"to your projects.",
-    sub:"Noxa Studio is a community where you can share scripts, UI, models, animations and plugins, or find a developer for your project.",
+    nav_home:"Home",nav_board:"Board",nav_vid:"Videos",nav_plug:"Plugins",nav_comm:"Community",nav_team:"Team",team_t:"Team",team_s:"The people behind Noxa Studio.",tm_name:"Name",tm_role:"Role (e.g. Animator)",tm_photo:"Profile photo",no_team:"No team members added yet.",login:"Log In",register:"Sign Up",logout:"Log out",
+    pill:"Roblox Developer Community",h1a:"Let's build your",h1b:"dream Roblox game",h1c:"together.",
+    sub:"Find the right team for scripts, UI, models and animation, share your project and get feedback from the community.",
     cta1:"▶ Explore the board",chip:"⚡ Real submissions",
     sec_t:"Sections",sec_s:"Jump to what you need.",s_board:"Community Board",s_board_d:"Share projects, find developers.",
     s_vid:"Videos",s_vid_d:"Announcements and tutorials.",s_plug:"Plugins",s_plug_d:"Noxa's own Roblox Studio plugins.",
@@ -75,12 +75,12 @@ const isAdmin = () => !!user && ADMIN_EMAILS.map(e=>e.toLowerCase()).includes(us
 function toast(msg){const el=$("#toast");el.textContent=msg;el.classList.add("show");setTimeout(()=>el.classList.remove("show"),2600)}
 async function hash(s){const b=await crypto.subtle.digest("SHA-256",new TextEncoder().encode(s));return [...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,"0")).join("")}
 const getPosts = () => store.get("noxa_posts",[]);
-const loadC = () => { const c = store.get("noxa_content",null) || window.NOXA_CONTENT || {}; return {videos:c.videos||[],plugins:c.plugins||[]}; };
+const loadC = () => { const c = store.get("noxa_content",null) || window.NOXA_CONTENT || {}; return {videos:c.videos||[],plugins:c.plugins||[],team:c.team||[]}; };
 const saveC = c => store.set("noxa_content",c);
 const ytId = u => { const m=String(u).match(/(?:youtu\.be\/|[?&]v=|shorts\/|embed\/|live\/)([\w-]{11})/); return m && m[1]; };
 
 /* ===== Ortak yerleşim (menü, alt bilgi, giriş penceresi) ===== */
-const NAV = [["categories","cat_t"],["videos","nav_vid"],["plugins","nav_plug"],["board","nav_board"],["share","sh_t"],["community","nav_comm"]];
+const NAV = [["categories","cat_t"],["videos","nav_vid"],["plugins","nav_plug"],["board","nav_board"],["share","sh_t"],["team","nav_team"],["community","nav_comm"]];
 document.querySelectorAll("header.nav,.foot,.modal,.toast").forEach(e=>e.remove());
 document.body.insertAdjacentHTML("afterbegin",`
 <header class="nav">
@@ -119,7 +119,7 @@ function applyLang(){
   if($("#pCat")) $("#pCat").innerHTML = CATS.map(c=>`<option value="${c}">${I18N[lang].cats[c][0]}</option>`).join("");
   setMode(authMode); refresh();
 }
-function refresh(){ renderUser(); renderCats(); renderFilters(); renderPosts(); adminBox(); renderContent(); }
+function refresh(){ renderUser(); renderCats(); renderFilters(); renderPosts(); adminBox(); renderContent(); renderTeam(); teamForm(); }
 document.querySelectorAll(".lang button").forEach(b=>b.onclick=()=>{lang=b.dataset.lang;store.set("noxa_lang",lang);applyLang()});
 function applyTheme(th){document.documentElement.dataset.theme=th;$("#themeBtn").textContent=th==="light"?"☀":"☾";store.set("noxa_theme",th)}
 $("#themeBtn").onclick=()=>applyTheme(document.documentElement.dataset.theme==="light"?"dark":"light");
@@ -211,6 +211,47 @@ function renderContent(){
     }).join("");
     el.querySelectorAll(".del").forEach(b=>b.onclick=()=>{const c=loadC();c[key]=c[key].filter(x=>x.id!==b.dataset.id);saveC(c);renderContent();toast(t("deleted"))});
   });
+}
+
+/* ===== Ekip (sadece yönetici ekler) ===== */
+let teamOpen=false;
+const okImg = u => typeof u==="string" && /^(data:image\/|https?:\/\/)/i.test(u);
+const toDataUrl = file => new Promise(res=>{
+  if(!file) return res("");
+  const r=new FileReader();
+  r.onload=()=>{const im=new Image();
+    im.onload=()=>{const S=200,c=document.createElement("canvas");c.width=c.height=S;const m=Math.min(im.width,im.height);
+      c.getContext("2d").drawImage(im,(im.width-m)/2,(im.height-m)/2,m,m,0,0,S,S);res(c.toDataURL("image/jpeg",.85))};
+    im.onerror=()=>res(""); im.src=r.result};
+  r.onerror=()=>res(""); r.readAsDataURL(file);
+});
+function renderTeam(){
+  const el=$("#items-team"); if(!el) return;
+  const adm=isAdmin(), list=loadC().team.slice().sort((a,b)=>a.date-b.date);
+  const cards=list.map(m=>`<div class="card member"><div class="pp">${okImg(m.img)?`<img alt="" src="${esc(m.img)}">`:esc((m.name||"?")[0].toUpperCase())}</div><h3>${esc(m.name)}</h3><p>${esc(m.role||"")}</p>${adm?`<button class="del" data-id="${m.id}">${t("del")}</button>`:""}</div>`).join("");
+  el.innerHTML=(cards+(adm?`<button class="card member add" id="teamPlus" title="${t("add")}">+</button>`:""))||`<div class="empty">${t("no_team")}</div>`;
+  el.querySelectorAll(".del").forEach(b=>b.onclick=()=>{const c=loadC();c.team=c.team.filter(x=>x.id!==b.dataset.id);saveC(c);renderTeam();toast(t("deleted"))});
+  const p=$("#teamPlus"); if(p) p.onclick=()=>{teamOpen=!teamOpen;teamForm()};
+}
+function teamForm(){
+  const box=$("#admin-team"); if(!box) return;
+  if(!isAdmin()||!teamOpen){box.innerHTML="";return}
+  box.innerHTML=`<form class="card form" id="tm-form"><span class="tag hire" style="width:max-content">${t("adm")}</span>
+    <input id="tm-name" required maxlength="40" placeholder="${t("tm_name")}">
+    <input id="tm-role" maxlength="40" placeholder="${t("tm_role")}">
+    <label class="mini">${t("tm_photo")}<input id="tm-img" type="file" accept="image/*"></label>
+    <div class="row"><button class="btn btn-primary" type="submit">${t("add")}</button><button class="btn btn-ghost" type="button" id="tm-exp">${t("exp")}</button></div>
+    <p class="mini">${t("exp_hint")}</p></form>`;
+  $("#tm-form").onsubmit=async e=>{
+    e.preventDefault();
+    const img=await toDataUrl($("#tm-img").files[0]), c=loadC();
+    c.team.push({id:Date.now().toString(36),name:$("#tm-name").value.trim(),role:$("#tm-role").value.trim(),img,date:Date.now()});
+    saveC(c); teamOpen=false; teamForm(); renderTeam(); toast(t("added"));
+  };
+  $("#tm-exp").onclick=()=>{
+    const blob=new Blob(["window.NOXA_CONTENT = "+JSON.stringify(loadC(),null,2)+";"],{type:"text/javascript"});
+    const a=document.createElement("a"); a.href=URL.createObjectURL(blob); a.download="content.js"; a.click();
+  };
 }
 
 /* ===== Giriş / Kayıt ===== */
