@@ -112,3 +112,4 @@ input:focus,select:focus,textarea:focus{border-color:var(--p)}
 .member.add{cursor:pointer;font-size:44px;color:var(--p);border-style:dashed;min-height:180px;justify-content:center;background:none}
 .member.add:hover{border-color:var(--p);background:var(--glow)}
 label.mini{display:grid;gap:6px;color:var(--mut);font-size:13px}
+.links{gap:20px}.links a{white-space:nowrap}
