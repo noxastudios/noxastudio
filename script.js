@@ -1,678 +1,700 @@
-const STORAGE_KEY = "noxa_posts";
+document.addEventListener("DOMContentLoaded", () => {
+
+    /* =========================================
+       ELEMENTLER
+    ========================================= */
+
+    const uploadModal = document.getElementById("uploadModal");
+    const searchModal = document.getElementById("searchModal");
+
+    const openUpload = document.getElementById("openUpload");
+    const heroUpload = document.getElementById("heroUpload");
+    const ctaUpload = document.getElementById("ctaUpload");
+
+    const closeUpload = document.getElementById("closeUpload");
+
+    const openSearch = document.getElementById("openSearch");
+    const closeSearch = document.getElementById("closeSearch");
+
+    const uploadForm = document.getElementById("uploadForm");
+
+    const contentGrid = document.getElementById("contentGrid");
+
+    const searchInput = document.getElementById("searchInput");
+    const searchResults = document.getElementById("searchResults");
+
+    const filterTabs = document.querySelectorAll(".filter-tab");
 
 
-/* =========================
-   DEFAULT POSTS
-========================= */
+    /* =========================================
+       MODAL AÇMA
+    ========================================= */
 
-const seed = [
-  {
-    type: "dev",
-    category: "script",
-    author: "@kutu_studyo",
-    title: "Roblox Lua geliştirici arıyorum",
-    desc: "FPS oyunu için silah sistemi ve UI üzerinde çalışacak geliştirici arıyoruz.",
-    ts: Date.now() - 1000 * 60 * 60 * 5
-  },
+    function showModal(modal) {
 
-  {
-    type: "proj",
-    category: "map",
-    author: "@pixelform",
-    title: "2D platformer demomu paylaşıyorum",
-    desc: "Solo geliştirdiğim bir demo, geri bildirim ve olası ortaklık için paylaşıyorum.",
-    ts: Date.now() - 1000 * 60 * 60 * 26
-  },
+        if (!modal) return;
 
-  {
-    type: "dev",
-    category: "ui",
-    author: "@noxdesign",
-    title: "Roblox UI Designer arıyorum",
-    desc: "Yeni projem için modern ve sade bir arayüz tasarlayabilecek UI Designer arıyorum.",
-    ts: Date.now() - 1000 * 60 * 60 * 9
-  },
+        modal.classList.add("open");
 
-  {
-    type: "dev",
-    category: "animator",
-    author: "@voiddev",
-    title: "Animator aranıyor",
-    desc: "Roblox projemiz için karakter animasyonları hazırlayabilecek bir animator arıyoruz.",
-    ts: Date.now() - 1000 * 60 * 60 * 15
-  }
-];
-
-
-/* =========================
-   STORAGE
-========================= */
-
-function loadPosts() {
-
-  try {
-
-    const raw = localStorage.getItem(STORAGE_KEY);
-
-    if (raw) {
-      return JSON.parse(raw);
+        document.body.style.overflow = "hidden";
     }
 
-  } catch (error) {
 
-    console.warn("LocalStorage okunamadı:", error);
+    /* =========================================
+       MODAL KAPATMA
+    ========================================= */
 
-  }
+    function hideModal(modal) {
 
-  return seed;
-}
+        if (!modal) return;
 
+        modal.classList.remove("open");
 
-function savePosts(posts) {
+        document.body.style.overflow = "";
+    }
 
-  try {
 
-    localStorage.setItem(
-      STORAGE_KEY,
-      JSON.stringify(posts)
-    );
+    /* =========================================
+       UPLOAD MODAL
+    ========================================= */
 
-  } catch (error) {
+    if (openUpload) {
+        openUpload.addEventListener("click", () => {
+            showModal(uploadModal);
+        });
+    }
 
-    console.warn("LocalStorage kaydedilemedi:", error);
 
-  }
+    if (heroUpload) {
+        heroUpload.addEventListener("click", () => {
+            showModal(uploadModal);
+        });
+    }
 
-}
 
+    if (ctaUpload) {
+        ctaUpload.addEventListener("click", () => {
+            showModal(uploadModal);
+        });
+    }
 
-/* =========================
-   HELPERS
-========================= */
 
-function escapeHtml(value) {
+    if (closeUpload) {
+        closeUpload.addEventListener("click", () => {
+            hideModal(uploadModal);
+        });
+    }
 
-  const div = document.createElement("div");
 
-  div.textContent = value ?? "";
+    /* =========================================
+       SEARCH MODAL
+    ========================================= */
 
-  return div.innerHTML;
-}
+    if (openSearch) {
 
+        openSearch.addEventListener("click", () => {
 
-function timeAgo(timestamp) {
+            showModal(searchModal);
 
-  const diff =
-    Math.floor(
-      (Date.now() - timestamp) / 1000
-    );
+            setTimeout(() => {
+                searchInput.focus();
+            }, 200);
 
-  if (diff < 60) {
-    return "az önce";
-  }
+        });
 
-  if (diff < 3600) {
-    return `${Math.max(1, Math.floor(diff / 60))} dk önce`;
-  }
+    }
 
-  if (diff < 86400) {
-    return `${Math.floor(diff / 3600)} saat önce`;
-  }
 
-  return `${Math.floor(diff / 86400)} gün önce`;
-}
+    if (closeSearch) {
 
+        closeSearch.addEventListener("click", () => {
+            hideModal(searchModal);
+        });
 
-function getCategoryName(category) {
+    }
 
-  const names = {
 
-    ui: "UI Designer",
+    /* =========================================
+       DIŞARI TIKLAYINCA MODAL KAPAT
+    ========================================= */
 
-    map: "Map Designer",
+    [uploadModal, searchModal].forEach(modal => {
 
-    script: "Scripter",
+        if (!modal) return;
 
-    animator: "Animator"
+        modal.addEventListener("click", event => {
 
-  };
+            if (event.target === modal) {
+                hideModal(modal);
+            }
 
-  return names[category] || "Genel";
-
-}
-
-
-/* =========================
-   STATE
-========================= */
-
-let posts = loadPosts();
-
-let activeFilter = "all";
-
-let categoryFilter = null;
-
-
-/* =========================
-   ELEMENTS
-========================= */
-
-const listEl =
-  document.getElementById("list");
-
-const emptyEl =
-  document.getElementById("empty");
-
-const postCountEl =
-  document.getElementById("postCount");
-
-const form =
-  document.getElementById("post-form");
-
-
-/* =========================
-   POST COUNT
-========================= */
-
-function updateStats() {
-
-  if (!postCountEl) return;
-
-  postCountEl.textContent = posts.length;
-
-}
-
-
-/* =========================
-   RENDER
-========================= */
-
-function render() {
-
-  let filtered = [...posts];
-
-
-  /* TYPE FILTER */
-
-  if (activeFilter !== "all") {
-
-    filtered = filtered.filter(
-      post => post.type === activeFilter
-    );
-
-  }
-
-
-  /* CATEGORY FILTER */
-
-  if (categoryFilter) {
-
-    filtered = filtered.filter(
-      post =>
-        post.category === categoryFilter
-    );
-
-  }
-
-
-  listEl.innerHTML = "";
-
-
-  emptyEl.hidden =
-    filtered.length !== 0;
-
-
-  filtered
-    .sort((a, b) => b.ts - a.ts)
-    .forEach((post, index) => {
-
-      const li =
-        document.createElement("li");
-
-      const label =
-        post.type === "dev"
-          ? "Geliştirici Arıyorum"
-          : "Proje Paylaşımı";
-
-
-      const category =
-        getCategoryName(post.category);
-
-
-      li.innerHTML = `
-
-        <span class="bar bar--${escapeHtml(post.type)}"></span>
-
-        <div>
-
-          <p class="title">
-            ${escapeHtml(post.title)}
-          </p>
-
-          <p class="desc">
-            ${escapeHtml(post.desc)}
-          </p>
-
-          <p class="meta">
-            ${label}
-            ·
-            ${category}
-            ·
-            ${escapeHtml(post.author)}
-          </p>
-
-        </div>
-
-        <span class="meta">
-          ${timeAgo(post.ts)}
-        </span>
-
-      `;
-
-
-      li.style.animationDelay =
-        `${index * 0.05}s`;
-
-      li.animate(
-        [
-          {
-            opacity: 0,
-            transform: "translateY(12px)"
-          },
-
-          {
-            opacity: 1,
-            transform: "translateY(0)"
-          }
-        ],
-        {
-          duration: 400,
-          delay: index * 40,
-          easing: "cubic-bezier(.2,.8,.2,1)",
-          fill: "both"
-        }
-      );
-
-
-      listEl.appendChild(li);
+        });
 
     });
 
 
-  updateStats();
+    /* =========================================
+       ESC TUŞU
+    ========================================= */
 
-}
+    document.addEventListener("keydown", event => {
 
+        if (event.key === "Escape") {
 
-/* =========================
-   TYPE FILTERS
-========================= */
+            hideModal(uploadModal);
+            hideModal(searchModal);
 
-document
-  .querySelectorAll(".filter")
-  .forEach(button => {
+        }
 
-    button.addEventListener(
-      "click",
-      () => {
 
-        document
-          .querySelectorAll(".filter")
-          .forEach(btn =>
-            btn.classList.remove("is-active")
-          );
+        /* CTRL + K */
 
+        if (
+            (event.ctrlKey || event.metaKey) &&
+            event.key.toLowerCase() === "k"
+        ) {
 
-        button.classList.add("is-active");
+            event.preventDefault();
 
+            showModal(searchModal);
 
-        activeFilter =
-          button.dataset.filter;
+            setTimeout(() => {
+                searchInput.focus();
+            }, 200);
 
+        }
 
-        categoryFilter = null;
+    });
 
 
-        document
-          .querySelectorAll(".category-card")
-          .forEach(card =>
-            card.classList.remove("selected")
-          );
+    /* =========================================
+       KATEGORİ FİLTRELEME
+    ========================================= */
 
+    filterTabs.forEach(tab => {
 
-        render();
+        tab.addEventListener("click", () => {
 
-      }
-    );
+            filterTabs.forEach(item => {
+                item.classList.remove("active");
+            });
 
-  });
+            tab.classList.add("active");
 
+            const filter = tab.dataset.filter;
 
-/* =========================
-   CATEGORY FILTERS
-========================= */
+            const cards =
+                document.querySelectorAll(".content-card");
 
-document
-  .querySelectorAll(".category-card")
-  .forEach(card => {
 
-    card.addEventListener(
-      "click",
-      () => {
+            cards.forEach(card => {
 
-        const category =
-          card.dataset.filter;
+                const category =
+                    card.dataset.category;
 
 
-        document
-          .querySelectorAll(".category-card")
-          .forEach(item =>
-            item.classList.remove("selected")
-          );
+                if (
+                    filter === "all" ||
+                    category === filter
+                ) {
 
+                    card.style.display = "";
 
-        card.classList.add("selected");
+                    setTimeout(() => {
+                        card.style.opacity = "1";
+                        card.style.transform = "";
+                    }, 20);
 
+                } else {
 
-        categoryFilter = category;
+                    card.style.opacity = "0";
+                    card.style.transform = "scale(0.96)";
 
+                    setTimeout(() => {
+                        card.style.display = "none";
+                    }, 180);
 
-        activeFilter = "all";
+                }
 
+            });
 
-        document
-          .querySelectorAll(".filter")
-          .forEach(btn =>
-            btn.classList.remove("is-active")
-          );
+        });
 
+    });
 
-        document
-          .querySelector(
-            '.filter[data-filter="all"]'
-          )
-          ?.classList.add("is-active");
 
+    /* =========================================
+       SEARCH SİSTEMİ
+    ========================================= */
 
-        document
-          .getElementById("pano")
-          .scrollIntoView({
-            behavior: "smooth"
-          });
+    function searchContent(query) {
 
+        const cards =
+            document.querySelectorAll(".content-card");
 
-        render();
+        const cleanQuery =
+            query.toLowerCase().trim();
 
-      }
-    );
 
-  });
+        if (!cleanQuery) {
 
+            searchResults.innerHTML = `
+                <div class="search-empty">
+                    Aramak istediğin içeriği yaz.
+                </div>
+            `;
 
-/* =========================
-   CREATE POST
-========================= */
+            return;
+        }
 
-form.addEventListener(
-  "submit",
-  event => {
 
-    event.preventDefault();
+        const results = [];
 
 
-    const data =
-      new FormData(form);
+        cards.forEach(card => {
 
+            const title =
+                card.querySelector("h3")?.textContent || "";
 
-    const author =
-      String(data.get("author") || "")
-        .trim();
+            const description =
+                card.querySelector(".card-description")?.textContent || "";
 
-    const title =
-      String(data.get("title") || "")
-        .trim();
+            const category =
+                card.dataset.category || "";
 
-    const desc =
-      String(data.get("desc") || "")
-        .trim();
 
-    const type =
-      String(data.get("type") || "dev");
+            const searchableText =
+                `${title} ${description} ${category}`.toLowerCase();
 
 
-    if (!author || !title || !desc) {
+            if (searchableText.includes(cleanQuery)) {
 
-      return;
+                results.push({
+                    title,
+                    description,
+                    category
+                });
 
-    }
-
-
-    const post = {
-
-      type,
-
-      category: "script",
-
-      author,
-
-      title,
-
-      desc,
-
-      ts: Date.now()
-
-    };
-
-
-    posts.push(post);
-
-    savePosts(posts);
-
-
-    form.reset();
-
-
-    activeFilter = "all";
-
-    categoryFilter = null;
-
-
-    document
-      .querySelectorAll(".filter")
-      .forEach(btn =>
-        btn.classList.remove("is-active")
-      );
-
-
-    document
-      .querySelector(
-        '.filter[data-filter="all"]'
-      )
-      ?.classList.add("is-active");
-
-
-    document
-      .querySelectorAll(".category-card")
-      .forEach(card =>
-        card.classList.remove("selected")
-      );
-
-
-    render();
-
-
-    document
-      .getElementById("pano")
-      .scrollIntoView({
-        behavior: "smooth"
-      });
-
-  }
-);
-
-
-/* =========================
-   CURSOR GLOW
-========================= */
-
-const cursorGlow =
-  document.querySelector(".cursor-glow");
-
-
-document.addEventListener(
-  "mousemove",
-  event => {
-
-    if (!cursorGlow) return;
-
-
-    cursorGlow.style.left =
-      `${event.clientX}px`;
-
-    cursorGlow.style.top =
-      `${event.clientY}px`;
-
-  }
-);
-
-
-/* =========================
-   MOUSE PARALLAX
-========================= */
-
-const heroPanel =
-  document.querySelector(".hero__panel");
-
-
-if (heroPanel) {
-
-  document.addEventListener(
-    "mousemove",
-    event => {
-
-      if (window.innerWidth < 900) {
-        return;
-      }
-
-
-      const x =
-        (event.clientX / window.innerWidth - 0.5) * 8;
-
-      const y =
-        (event.clientY / window.innerHeight - 0.5) * 5;
-
-
-      heroPanel.style.transform =
-        `
-        perspective(1000px)
-        rotateY(${-5 + x}deg)
-        rotateX(${2 - y}deg)
-        `;
-
-    }
-  );
-
-}
-
-
-/* =========================
-   BUTTON RIPPLE
-========================= */
-
-document
-  .querySelectorAll(".btn")
-  .forEach(button => {
-
-    button.addEventListener(
-      "click",
-      event => {
-
-        const ripple =
-          document.createElement("span");
-
-
-        const rect =
-          button.getBoundingClientRect();
-
-
-        const size =
-          Math.max(
-            rect.width,
-            rect.height
-          );
-
-
-        ripple.style.position =
-          "absolute";
-
-        ripple.style.width =
-          `${size}px`;
-
-        ripple.style.height =
-          `${size}px`;
-
-        ripple.style.left =
-          `${event.clientX - rect.left - size / 2}px`;
-
-        ripple.style.top =
-          `${event.clientY - rect.top - size / 2}px`;
-
-        ripple.style.borderRadius =
-          "50%";
-
-        ripple.style.background =
-          "rgba(255,255,255,.18)";
-
-        ripple.style.pointerEvents =
-          "none";
-
-        ripple.style.transform =
-          "scale(0)";
-
-
-        button.appendChild(ripple);
-
-
-        ripple.animate(
-          [
-            {
-              transform: "scale(0)",
-              opacity: 1
-            },
-
-            {
-              transform: "scale(1.8)",
-              opacity: 0
             }
-          ],
-          {
-            duration: 550,
-            easing: "ease-out"
-          }
-        ).onfinish = () => {
 
-          ripple.remove();
+        });
 
-        };
 
-      }
+        if (results.length === 0) {
+
+            searchResults.innerHTML = `
+                <div class="search-empty">
+                    "${escapeHTML(query)}" için sonuç bulunamadı.
+                </div>
+            `;
+
+            return;
+        }
+
+
+        searchResults.innerHTML =
+            results.map(result => `
+
+                <div class="search-result">
+
+                    <div class="search-result-image"></div>
+
+                    <div>
+
+                        <strong>
+                            ${escapeHTML(result.title)}
+                        </strong>
+
+                        <span>
+                            ${escapeHTML(
+                                result.category.toUpperCase()
+                            )}
+                            ·
+                            ${escapeHTML(result.description)}
+                        </span>
+
+                    </div>
+
+                </div>
+
+            `).join("");
+
+    }
+
+
+    if (searchInput) {
+
+        searchInput.addEventListener("input", () => {
+
+            searchContent(searchInput.value);
+
+        });
+
+    }
+
+
+    /* =========================================
+       HTML GÜVENLİĞİ
+    ========================================= */
+
+    function escapeHTML(value) {
+
+        return value
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#039;");
+
+    }
+
+
+    /* =========================================
+       İÇERİK PAYLAŞMA
+    ========================================= */
+
+    if (uploadForm) {
+
+        uploadForm.addEventListener("submit", event => {
+
+            event.preventDefault();
+
+
+            const title =
+                document.getElementById("contentTitle").value.trim();
+
+            const category =
+                document.getElementById("contentCategory").value;
+
+            const description =
+                document
+                    .getElementById("contentDescription")
+                    .value
+                    .trim();
+
+            const file =
+                document.getElementById("contentFile").files[0];
+
+
+            if (!title || !category || !description) {
+
+                alert("Lütfen tüm alanları doldur.");
+
+                return;
+            }
+
+
+            /* Yeni kart */
+
+            const card =
+                document.createElement("article");
+
+
+            card.className = "content-card";
+
+            card.dataset.category = category;
+
+
+            let categoryName = "İÇERİK";
+
+
+            if (category === "animation") {
+                categoryName = "ANIMATION";
+            }
+
+            if (category === "script") {
+                categoryName = "SCRIPT";
+            }
+
+            if (category === "model") {
+                categoryName = "MODEL";
+            }
+
+            if (category === "ui") {
+                categoryName = "UI";
+            }
+
+
+            card.innerHTML = `
+
+                <div class="card-preview preview-purple">
+
+                    <div class="card-preview-grid"></div>
+
+                    <div class="mini-character">
+
+                        <div class="mini-head"></div>
+
+                        <div class="mini-body"></div>
+
+                        <div class="mini-arm left"></div>
+
+                        <div class="mini-arm right"></div>
+
+                        <div class="mini-leg left"></div>
+
+                        <div class="mini-leg right"></div>
+
+                    </div>
+
+                    <div class="card-type">
+                        ${categoryName}
+                    </div>
+
+                    <button class="card-play">
+                        ▶
+                    </button>
+
+                </div>
+
+
+                <div class="card-content">
+
+                    <div class="card-title-row">
+
+                        <h3>
+                            ${escapeHTML(title)}
+                        </h3>
+
+                        <button class="more-button">
+                            •••
+                        </button>
+
+                    </div>
+
+
+                    <p class="card-description">
+                        ${escapeHTML(description)}
+                    </p>
+
+
+                    <div class="card-author">
+
+                        <div class="author-avatar">
+                            NX
+                        </div>
+
+                        <div class="author-info">
+
+                            <strong>
+                                NoxaUser
+                            </strong>
+
+                            <span>
+                                şimdi
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="card-footer">
+
+                        <div class="card-stats">
+
+                            <span>
+                                ♡ 0
+                            </span>
+
+                            <span>
+                                ↓ 0
+                            </span>
+
+                        </div>
+
+                        <span class="card-version">
+                            NOXA
+                        </span>
+
+                    </div>
+
+                </div>
+
+            `;
+
+
+            contentGrid.prepend(card);
+
+
+            /* Formu temizle */
+
+            uploadForm.reset();
+
+
+            /* Modal kapat */
+
+            hideModal(uploadModal);
+
+
+            /* Kullanıcıya bilgi */
+
+            showNotification(
+                "İçeriğin başarıyla paylaşıldı!"
+            );
+
+        });
+
+    }
+
+
+    /* =========================================
+       BİLDİRİM
+    ========================================= */
+
+    function showNotification(message) {
+
+        const notification =
+            document.createElement("div");
+
+
+        notification.style.position = "fixed";
+        notification.style.bottom = "25px";
+        notification.style.right = "25px";
+
+        notification.style.zIndex = "1000";
+
+        notification.style.padding =
+            "13px 17px";
+
+        notification.style.border =
+            "1px solid rgba(139,92,246,0.3)";
+
+        notification.style.borderRadius =
+            "10px";
+
+        notification.style.background =
+            "#15121d";
+
+        notification.style.color =
+            "#d8d0e6";
+
+        notification.style.fontSize =
+            "11px";
+
+        notification.style.boxShadow =
+            "0 15px 40px rgba(0,0,0,0.4)";
+
+        notification.textContent =
+            message;
+
+
+        document.body.appendChild(notification);
+
+
+        setTimeout(() => {
+
+            notification.style.opacity = "0";
+            notification.style.transform =
+                "translateY(10px)";
+
+            notification.style.transition =
+                "0.25s ease";
+
+
+            setTimeout(() => {
+                notification.remove();
+            }, 250);
+
+        }, 2500);
+
+    }
+
+
+    /* =========================================
+       NAVBAR SCROLL
+    ========================================= */
+
+    const navbar =
+        document.querySelector(".navbar");
+
+
+    window.addEventListener("scroll", () => {
+
+        if (window.scrollY > 30) {
+
+            navbar.style.background =
+                "rgba(8,7,11,0.92)";
+
+        } else {
+
+            navbar.style.background =
+                "rgba(8,7,11,0.72)";
+
+        }
+
+    });
+
+
+    /* =========================================
+       KART HOVER
+    ========================================= */
+
+    document
+        .querySelectorAll(".content-card")
+        .forEach(card => {
+
+            card.addEventListener(
+                "mouseenter",
+                () => {
+
+                    card.style.zIndex = "2";
+
+                }
+            );
+
+
+            card.addEventListener(
+                "mouseleave",
+                () => {
+
+                    card.style.zIndex = "";
+
+                }
+            );
+
+        });
+
+
+    /* =========================================
+       ANİMASYON ÖNİZLEME
+    ========================================= */
+
+    const character =
+        document.querySelector(".character-preview");
+
+
+    if (character) {
+
+        let angle = 0;
+
+
+        setInterval(() => {
+
+            angle += 0.7;
+
+            const x =
+                Math.sin(angle * 0.04) * 7;
+
+            character.style.transform =
+                `translate(calc(-50% + ${x}px), -50%)`;
+
+        }, 30);
+
+    }
+
+
+    /* =========================================
+       SAYFA YÜKLENDİ
+    ========================================= */
+
+    console.log(
+        "%cNoxa Studio",
+        "color:#9b72ff;font-size:24px;font-weight:bold"
     );
 
-  });
+    console.log(
+        "Noxa Studio başarıyla başlatıldı."
+    );
 
-
-/* =========================
-   REFRESH TIME
-========================= */
-
-setInterval(
-  render,
-  60000
-);
-
-
-/* =========================
-   INITIAL RENDER
-========================= */
-
-render();
+});
