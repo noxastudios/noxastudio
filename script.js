@@ -2,12 +2,14 @@
 // Google girişi için Google Cloud Console'dan OAuth Client ID alıp yaz.
 const GOOGLE_CLIENT_ID = "";
 // Video ve plugin ekleyebilecek yönetici e-postaları (kendi e-postanı yaz, bu e-postayla kayıt ol).
-const ADMIN_EMAILS = ["buraya-kendi-epostani-yaz@mail.com"];
+const ADMIN_EMAILS = ["noxastudiosh1@gmail.com"]; // başka e-postayla da girmek istersen virgülle ekle
+// İletişim formundaki mesajlar bu adrese gelir.
+const CONTACT_EMAIL = "noxastudiosh1@gmail.com";
 
 /* ===== Çeviriler ===== */
 const I18N = {
   tr: {
-    nav_home:"Ana Sayfa",nav_board:"Pano",nav_vid:"Videolar",nav_plug:"Pluginler",nav_comm:"Topluluk",nav_team:"Ekip",team_t:"Ekip",team_s:"Noxa Studio'yu oluşturan insanlar.",tm_name:"İsim",tm_role:"Rol (ör. Animatör)",tm_photo:"Profil fotoğrafı",no_team:"Henüz ekip üyesi eklenmedi.",login:"Giriş Yap",register:"Kayıt Ol",logout:"Çıkış",
+    nav_home:"Ana Sayfa",nav_board:"Pano",nav_vid:"Videolar",nav_plug:"Pluginler",nav_comm:"Topluluk",nav_team:"Ekip",nav_contact:"İletişim",ct_t:"İletişim",ct_s:"Bize bir mesaj bırak, doğrudan e-postamıza düşsün.",ct_name:"Adın",ct_mail:"E-posta adresin",ct_msg:"Mesajın",ct_send:"İletişime Geç",ct_sending:"Gönderiliyor...",ct_ok:"Mesajın gönderildi, teşekkürler!",ct_fail:"Gönderilemedi, e-posta uygulaman açılıyor.",team_t:"Ekip",team_s:"Noxa Studio'yu oluşturan insanlar.",tm_name:"İsim",tm_role:"Rol (ör. Animatör)",tm_photo:"Profil fotoğrafı",no_team:"Henüz ekip üyesi eklenmedi.",login:"Giriş Yap",register:"Kayıt Ol",logout:"Çıkış",
     pill:"Roblox Geliştirici Topluluğu",h1a:"Hayalindeki",h1b:"Roblox oyununu",h1c:"birlikte geliştirelim.",
     sub:"Script, UI, model ve animasyon için doğru ekibi bul, projeni paylaş, topluluktan geri bildirim al.",
     cta1:"▶ Panoyu keşfet",chip:"⚡ Gerçek paylaşımlar",
@@ -29,7 +31,7 @@ const I18N = {
     cats:{animation:["Animasyon","Karakter, emote, savaş animasyonları"],script:["Script","Lua sistemleri ve modüller"],model:["3D Model","Mesh, prop ve haritalar"],ui:["UI / GUI","Arayüz ve menü tasarımları"],vfx:["VFX","Efekt ve partikül sistemleri"],project:["Projeler","Tam oyun ve proje paylaşımları"],plugin:["Plugin","Roblox Studio pluginleri"]}
   },
   en: {
-    nav_home:"Home",nav_board:"Board",nav_vid:"Videos",nav_plug:"Plugins",nav_comm:"Community",nav_team:"Team",team_t:"Team",team_s:"The people behind Noxa Studio.",tm_name:"Name",tm_role:"Role (e.g. Animator)",tm_photo:"Profile photo",no_team:"No team members added yet.",login:"Log In",register:"Sign Up",logout:"Log out",
+    nav_home:"Home",nav_board:"Board",nav_vid:"Videos",nav_plug:"Plugins",nav_comm:"Community",nav_team:"Team",nav_contact:"Contact",ct_t:"Contact",ct_s:"Leave us a message and it lands straight in our inbox.",ct_name:"Your name",ct_mail:"Your email",ct_msg:"Your message",ct_send:"Get in touch",ct_sending:"Sending...",ct_ok:"Message sent, thank you!",ct_fail:"Could not send, opening your email app.",team_t:"Team",team_s:"The people behind Noxa Studio.",tm_name:"Name",tm_role:"Role (e.g. Animator)",tm_photo:"Profile photo",no_team:"No team members added yet.",login:"Log In",register:"Sign Up",logout:"Log out",
     pill:"Roblox Developer Community",h1a:"Let's build your",h1b:"dream Roblox game",h1c:"together.",
     sub:"Find the right team for scripts, UI, models and animation, share your project and get feedback from the community.",
     cta1:"▶ Explore the board",chip:"⚡ Real submissions",
@@ -71,7 +73,7 @@ const t = k => I18N[lang][k] ?? k;
 const esc = s => String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const fixUrl = u => u && !/^https?:\/\//i.test(u) ? "https://"+u : u;
 const fmtDate = d => new Date(d).toLocaleDateString(lang==="tr"?"tr-TR":"en-US");
-const isAdmin = () => !!user && ADMIN_EMAILS.map(e=>e.toLowerCase()).includes(user.email);
+const isAdmin = () => !!user && ADMIN_EMAILS.map(e=>e.toLowerCase()).includes(String(user.email).toLowerCase());
 function toast(msg){const el=$("#toast");el.textContent=msg;el.classList.add("show");setTimeout(()=>el.classList.remove("show"),2600)}
 async function hash(s){const b=await crypto.subtle.digest("SHA-256",new TextEncoder().encode(s));return [...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,"0")).join("")}
 const getPosts = () => store.get("noxa_posts",[]);
@@ -80,7 +82,7 @@ const saveC = c => store.set("noxa_content",c);
 const ytId = u => { const m=String(u).match(/(?:youtu\.be\/|[?&]v=|shorts\/|embed\/|live\/)([\w-]{11})/); return m && m[1]; };
 
 /* ===== Ortak yerleşim (menü, alt bilgi, giriş penceresi) ===== */
-const NAV = [["categories","cat_t"],["videos","nav_vid"],["plugins","nav_plug"],["board","nav_board"],["share","sh_t"],["team","nav_team"],["community","nav_comm"]];
+const NAV = [["categories","cat_t"],["videos","nav_vid"],["plugins","nav_plug"],["board","nav_board"],["share","sh_t"],["team","nav_team"],["contact","nav_contact"],["community","nav_comm"]];
 document.querySelectorAll("header.nav,.foot,.modal,.toast").forEach(e=>e.remove());
 document.body.insertAdjacentHTML("afterbegin",`
 <header class="nav">
@@ -300,6 +302,24 @@ $("#googleBtn").onclick=()=>{
   if(window.google&&google.accounts) return init();
   const s=document.createElement("script"); s.src="https://accounts.google.com/gsi/client"; s.onload=init; document.head.appendChild(s);
 };
+
+/* ===== İletişim (FormSubmit ile Gmail'e gider) ===== */
+on("#contactForm","onsubmit",async e=>{
+  e.preventDefault();
+  const f=e.target, btn=f.querySelector("button"), g=n=>f.elements[n].value.trim();
+  if(g("_honey")) return;
+  const data={name:g("name"),email:g("email"),message:g("message"),_subject:"Noxa Studio - yeni mesaj: "+g("name"),_captcha:"false",_template:"table"};
+  btn.disabled=true; btn.textContent=t("ct_sending");
+  try{
+    const r=await fetch("https://formsubmit.co/ajax/"+CONTACT_EMAIL,{method:"POST",headers:{"Content-Type":"application/json",Accept:"application/json"},body:JSON.stringify(data)});
+    const j=await r.json();
+    if(!r.ok||!(j.success===true||j.success==="true")) throw new Error(j.message||"fail");
+    f.reset(); toast(t("ct_ok"));
+  }catch(err){
+    toast(t("ct_fail"));
+    location.href=`mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent("Noxa Studio - "+data.name)}&body=${encodeURIComponent(data.message+"\n\n"+data.email)}`;
+  }finally{ btn.disabled=false; btn.textContent=t("ct_send"); }
+});
 
 /* ===== Başlangıç ===== */
 $("#burger").onclick=()=>$("#links").classList.toggle("open");
