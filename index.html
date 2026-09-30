@@ -1,462 +1,1004 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Noxa Studio — Geliştirici Topluluğu</title>
+    <title>Noxa Studio — Geliştirici Platformu</title>
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Unbounded:wght@500;700;900&display=swap" rel="stylesheet">
+    <meta
+        name="description"
+        content="Noxa Studio — Roblox animasyonlarını, scriptlerini, modellerini ve projelerini paylaş."
+    >
 
-  <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+        rel="stylesheet"
+    >
+
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-  <!-- SPACE BACKGROUND -->
-  <div class="space-background">
-    <div class="stars stars-1"></div>
-    <div class="stars stars-2"></div>
-    <div class="stars stars-3"></div>
+    <!-- Arka plan efektleri -->
+    <div class="background">
+        <div class="background-glow glow-one"></div>
+        <div class="background-glow glow-two"></div>
+        <div class="background-grid"></div>
+    </div>
 
-    <div class="nebula nebula-1"></div>
-    <div class="nebula nebula-2"></div>
 
-    <div class="grid-overlay"></div>
-  </div>
+    <!-- NAVBAR -->
+    <header class="navbar">
 
-  <!-- CURSOR GLOW -->
-  <div class="cursor-glow"></div>
+        <div class="nav-container">
 
-  <!-- HEADER -->
-  <header class="topbar">
+            <a href="#" class="logo">
+                <div class="logo-mark">N</div>
+                <span>Noxa<span class="logo-light">Studio</span></span>
+            </a>
 
-    <div class="wrap topbar__inner">
 
-      <a href="#" class="logo">
-        Noxa<span>Studio</span>
-      </a>
+            <nav class="nav-links">
 
-      <nav class="nav">
-        <a href="#pano">Pano</a>
-        <a href="#kategoriler">Kategoriler</a>
-        <a href="#ilan-olustur">İlan Ver</a>
-      </nav>
+                <a href="#kesfet" class="nav-link active">
+                    Keşfet
+                </a>
 
-      <a
-        class="btn btn--discord"
-        href="https://discord.gg/QxwXSz8yK"
-        target="_blank"
-        rel="noopener"
-      >
-        <span>Discord'a Katıl</span>
-      </a>
+                <a href="#animasyonlar" class="nav-link">
+                    Animasyonlar
+                </a>
+
+                <a href="#projeler" class="nav-link">
+                    Projeler
+                </a>
+
+                <a href="#kategoriler" class="nav-link">
+                    Kategoriler
+                </a>
+
+                <a href="#topluluk" class="nav-link">
+                    Topluluk
+                </a>
+
+            </nav>
+
+
+            <div class="nav-actions">
+
+                <button class="nav-search" id="openSearch">
+                    <span class="search-icon">⌕</span>
+                    <span>Ara</span>
+                    <kbd>CTRL K</kbd>
+                </button>
+
+                <button class="login-button">
+                    Giriş Yap
+                </button>
+
+                <button class="create-button" id="openUpload">
+                    <span>+</span>
+                    Paylaş
+                </button>
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+
+    <!-- HERO -->
+    <main>
+
+        <section class="hero" id="kesfet">
+
+            <div class="hero-content">
+
+                <div class="hero-badge">
+                    <span class="badge-dot"></span>
+                    Noxa Studio Online
+                </div>
+
+
+                <h1>
+                    Üret.
+                    <span>Paylaş.</span>
+                    Keşfet.
+                </h1>
+
+
+                <p class="hero-description">
+                    Animasyonlarını, scriptlerini, modellerini ve projelerini
+                    Noxa topluluğuyla paylaş. Yeni fikirler keşfet ve
+                    geliştiricilerle birlikte üret.
+                </p>
+
+
+                <div class="hero-actions">
+
+                    <button class="primary-button" id="heroUpload">
+                        <span>+</span>
+                        İçerik Paylaş
+                    </button>
+
+                    <a href="#animasyonlar" class="secondary-button">
+                        Çalışmaları Keşfet
+                        <span>↓</span>
+                    </a>
+
+                </div>
+
+
+                <div class="hero-stats">
+
+                    <div class="stat">
+                        <strong>1.2K+</strong>
+                        <span>İçerik</span>
+                    </div>
+
+                    <div class="stat-divider"></div>
+
+                    <div class="stat">
+                        <strong>480+</strong>
+                        <span>Geliştirici</span>
+                    </div>
+
+                    <div class="stat-divider"></div>
+
+                    <div class="stat">
+                        <strong>12K+</strong>
+                        <span>İndirme</span>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- HERO PREVIEW -->
+            <div class="hero-preview">
+
+                <div class="preview-window">
+
+                    <div class="window-top">
+
+                        <div class="window-dots">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+
+                        <div class="window-title">
+                            noxa_animation / combat_idle
+                        </div>
+
+                        <div class="window-status">
+                            ● LIVE
+                        </div>
+
+                    </div>
+
+
+                    <div class="preview-body">
+
+                        <div class="preview-sidebar">
+
+                            <div class="sidebar-label">
+                                ANIMATION
+                            </div>
+
+                            <div class="sidebar-item active">
+                                Combat Idle
+                            </div>
+
+                            <div class="sidebar-item">
+                                Combat Walk
+                            </div>
+
+                            <div class="sidebar-item">
+                                Attack
+                            </div>
+
+                            <div class="sidebar-item">
+                                Dodge
+                            </div>
+
+                        </div>
+
+
+                        <div class="animation-view">
+
+                            <div class="animation-grid"></div>
+
+                            <div class="character-preview">
+
+                                <div class="character-head"></div>
+
+                                <div class="character-body"></div>
+
+                                <div class="character-arm arm-left"></div>
+                                <div class="character-arm arm-right"></div>
+
+                                <div class="character-leg leg-left"></div>
+                                <div class="character-leg leg-right"></div>
+
+                            </div>
+
+
+                            <div class="animation-info">
+
+                                <div>
+                                    <small>FPS</small>
+                                    <strong>60</strong>
+                                </div>
+
+                                <div>
+                                    <small>FRAMES</small>
+                                    <strong>48</strong>
+                                </div>
+
+                                <div>
+                                    <small>TYPE</small>
+                                    <strong>R15</strong>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="floating-card floating-card-one">
+
+                    <div class="floating-icon purple">
+                        ✦
+                    </div>
+
+                    <div>
+                        <strong>Yeni animasyon</strong>
+                        <span>az önce paylaşıldı</span>
+                    </div>
+
+                </div>
+
+
+                <div class="floating-card floating-card-two">
+
+                    <div class="avatar-small">
+                        N
+                    </div>
+
+                    <div>
+                        <strong>noxadev</strong>
+                        <span>+124 beğeni</span>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- DISCOVER -->
+        <section class="discover-section" id="animasyonlar">
+
+            <div class="section-header">
+
+                <div>
+
+                    <div class="section-eyebrow">
+                        TOPLULUK
+                    </div>
+
+                    <h2>
+                        Topluluktan <span>son çalışmalar.</span>
+                    </h2>
+
+                    <p>
+                        Noxa geliştiricilerinin paylaştığı içerikleri keşfet.
+                    </p>
+
+                </div>
+
+
+                <button class="view-all-button">
+                    Tümünü Gör
+                    <span>→</span>
+                </button>
+
+            </div>
+
+
+            <!-- FILTER BAR -->
+            <div class="filter-bar">
+
+                <div class="filter-tabs">
+
+                    <button class="filter-tab active" data-filter="all">
+                        Tümü
+                    </button>
+
+                    <button class="filter-tab" data-filter="animation">
+                        Animasyon
+                    </button>
+
+                    <button class="filter-tab" data-filter="script">
+                        Script
+                    </button>
+
+                    <button class="filter-tab" data-filter="model">
+                        Model
+                    </button>
+
+                    <button class="filter-tab" data-filter="ui">
+                        UI
+                    </button>
+
+                </div>
+
+
+                <div class="sort-select">
+                    <span>Popüler</span>
+                    <span>⌄</span>
+                </div>
+
+            </div>
+
+
+            <!-- CONTENT GRID -->
+            <div class="content-grid" id="contentGrid">
+
+
+                <!-- CARD 1 -->
+                <article class="content-card" data-category="animation">
+
+                    <div class="card-preview preview-purple">
+
+                        <div class="card-preview-grid"></div>
+
+                        <div class="mini-character">
+                            <div class="mini-head"></div>
+                            <div class="mini-body"></div>
+                            <div class="mini-arm left"></div>
+                            <div class="mini-arm right"></div>
+                            <div class="mini-leg left"></div>
+                            <div class="mini-leg right"></div>
+                        </div>
+
+                        <div class="card-type">
+                            ANIMATION
+                        </div>
+
+                        <button class="card-play">
+                            ▶
+                        </button>
+
+                    </div>
+
+
+                    <div class="card-content">
+
+                        <div class="card-title-row">
+
+                            <h3>
+                                Combat Idle Pack
+                            </h3>
+
+                            <button class="more-button">
+                                •••
+                            </button>
+
+                        </div>
+
+                        <p class="card-description">
+                            R15 karakterler için combat idle animasyon paketi.
+                        </p>
+
+
+                        <div class="card-author">
+
+                            <div class="author-avatar">
+                                NX
+                            </div>
+
+                            <div class="author-info">
+                                <strong>noxadev</strong>
+                                <span>2 saat önce</span>
+                            </div>
+
+                        </div>
+
+
+                        <div class="card-footer">
+
+                            <div class="card-stats">
+                                <span>♡ 124</span>
+                                <span>↓ 68</span>
+                            </div>
+
+                            <span class="card-version">
+                                R15
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+
+
+                <!-- CARD 2 -->
+                <article class="content-card" data-category="script">
+
+                    <div class="card-preview preview-dark">
+
+                        <div class="code-preview">
+
+                            <span class="code-purple">local</span>
+                            <span> Animation</span> =
+                            <span class="code-purple"> Instance</span>.new()
+
+                            <br><br>
+
+                            <span class="code-purple">Animation</span>.Name =
+                            <span class="code-green">"Run"</span>
+
+                            <br>
+
+                            <span class="code-purple">Animation</span>.Priority =
+                            <span class="code-green">"Movement"</span>
+
+                        </div>
+
+                        <div class="card-type">
+                            SCRIPT
+                        </div>
+
+                    </div>
+
+
+                    <div class="card-content">
+
+                        <div class="card-title-row">
+
+                            <h3>
+                                Advanced Animation Controller
+                            </h3>
+
+                            <button class="more-button">
+                                •••
+                            </button>
+
+                        </div>
+
+                        <p class="card-description">
+                            Roblox için gelişmiş karakter animasyon sistemi.
+                        </p>
+
+
+                        <div class="card-author">
+
+                            <div class="author-avatar blue">
+                                RX
+                            </div>
+
+                            <div class="author-info">
+                                <strong>RexStudio</strong>
+                                <span>5 saat önce</span>
+                            </div>
+
+                        </div>
+
+
+                        <div class="card-footer">
+
+                            <div class="card-stats">
+                                <span>♡ 89</span>
+                                <span>↓ 41</span>
+                            </div>
+
+                            <span class="card-version">
+                                LUAU
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+
+
+                <!-- CARD 3 -->
+                <article class="content-card" data-category="model">
+
+                    <div class="card-preview preview-pink">
+
+                        <div class="model-shape">
+                            <div class="model-ring"></div>
+                            <div class="model-core"></div>
+                        </div>
+
+                        <div class="card-type">
+                            MODEL
+                        </div>
+
+                    </div>
+
+
+                    <div class="card-content">
+
+                        <div class="card-title-row">
+
+                            <h3>
+                                Sci-Fi Energy Core
+                            </h3>
+
+                            <button class="more-button">
+                                •••
+                            </button>
+
+                        </div>
+
+                        <p class="card-description">
+                            Bilim kurgu projeleri için enerji çekirdeği modeli.
+                        </p>
+
+
+                        <div class="card-author">
+
+                            <div class="author-avatar pink">
+                                VA
+                            </div>
+
+                            <div class="author-info">
+                                <strong>VantaArt</strong>
+                                <span>1 gün önce</span>
+                            </div>
+
+                        </div>
+
+
+                        <div class="card-footer">
+
+                            <div class="card-stats">
+                                <span>♡ 207</span>
+                                <span>↓ 132</span>
+                            </div>
+
+                            <span class="card-version">
+                                BLENDER
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+
+
+                <!-- CARD 4 -->
+                <article class="content-card" data-category="ui">
+
+                    <div class="card-preview preview-blue">
+
+                        <div class="ui-preview">
+
+                            <div class="ui-top"></div>
+
+                            <div class="ui-bars">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </div>
+
+                            <div class="ui-button-preview">
+                                PLAY
+                            </div>
+
+                        </div>
+
+                        <div class="card-type">
+                            UI
+                        </div>
+
+                    </div>
+
+
+                    <div class="card-content">
+
+                        <div class="card-title-row">
+
+                            <h3>
+                                Minimal Game UI
+                            </h3>
+
+                            <button class="more-button">
+                                •••
+                            </button>
+
+                        </div>
+
+                        <p class="card-description">
+                            Modern ve sade Roblox oyun arayüzü paketi.
+                        </p>
+
+
+                        <div class="card-author">
+
+                            <div class="author-avatar cyan">
+                                KO
+                            </div>
+
+                            <div class="author-info">
+                                <strong>KodaDev</strong>
+                                <span>2 gün önce</span>
+                            </div>
+
+                        </div>
+
+
+                        <div class="card-footer">
+
+                            <div class="card-stats">
+                                <span>♡ 76</span>
+                                <span>↓ 35</span>
+                            </div>
+
+                            <span class="card-version">
+                                ROBLOX
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- CATEGORIES -->
+        <section class="categories-section" id="kategoriler">
+
+            <div class="section-header centered">
+
+                <div>
+
+                    <div class="section-eyebrow">
+                        NOXA EKOSİSTEMİ
+                    </div>
+
+                    <h2>
+                        Üretimin her alanı <span>burada.</span>
+                    </h2>
+
+                </div>
+
+            </div>
+
+
+            <div class="category-grid">
+
+                <button class="category-card">
+                    <span class="category-icon">✦</span>
+                    <strong>Animasyon</strong>
+                    <small>214 içerik</small>
+                </button>
+
+                <button class="category-card">
+                    <span class="category-icon">⌘</span>
+                    <strong>Script</strong>
+                    <small>382 içerik</small>
+                </button>
+
+                <button class="category-card">
+                    <span class="category-icon">◇</span>
+                    <strong>3D Model</strong>
+                    <small>176 içerik</small>
+                </button>
+
+                <button class="category-card">
+                    <span class="category-icon">▣</span>
+                    <strong>UI / UX</strong>
+                    <small>124 içerik</small>
+                </button>
+
+                <button class="category-card">
+                    <span class="category-icon">◈</span>
+                    <strong>VFX</strong>
+                    <small>96 içerik</small>
+                </button>
+
+                <button class="category-card">
+                    <span class="category-icon">⚡</span>
+                    <strong>Projeler</strong>
+                    <small>208 içerik</small>
+                </button>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- CTA -->
+        <section class="cta-section" id="topluluk">
+
+            <div class="cta-glow"></div>
+
+            <div class="cta-content">
+
+                <div class="section-eyebrow">
+                    NOXA COMMUNITY
+                </div>
+
+                <h2>
+                    Ürettiklerini
+                    <span>göstermeye hazır mısın?</span>
+                </h2>
+
+                <p>
+                    Animasyonunu, scriptini veya projenı Noxa topluluğuyla paylaş.
+                </p>
+
+                <button class="primary-button large" id="ctaUpload">
+                    + İlk İçeriğini Paylaş
+                </button>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+
+    <!-- UPLOAD MODAL -->
+    <div class="modal-overlay" id="uploadModal">
+
+        <div class="upload-modal">
+
+            <button class="modal-close" id="closeUpload">
+                ×
+            </button>
+
+
+            <div class="modal-header">
+
+                <div class="modal-icon">
+                    +
+                </div>
+
+                <div>
+                    <h2>İçerik Paylaş</h2>
+                    <p>Çalışmanı Noxa topluluğuna gönder.</p>
+                </div>
+
+            </div>
+
+
+            <form id="uploadForm">
+
+                <div class="form-group">
+
+                    <label>
+                        İçerik adı
+                    </label>
+
+                    <input
+                        type="text"
+                        id="contentTitle"
+                        placeholder="Örn. Combat Animation Pack"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Kategori
+                    </label>
+
+                    <select id="contentCategory" required>
+
+                        <option value="">
+                            Kategori seç
+                        </option>
+
+                        <option value="animation">
+                            Animasyon
+                        </option>
+
+                        <option value="script">
+                            Script
+                        </option>
+
+                        <option value="model">
+                            3D Model
+                        </option>
+
+                        <option value="ui">
+                            UI / UX
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Açıklama
+                    </label>
+
+                    <textarea
+                        id="contentDescription"
+                        placeholder="İçeriğin hakkında kısa bir açıklama..."
+                        rows="4"
+                        required
+                    ></textarea>
+
+                </div>
+
+
+                <div class="upload-dropzone">
+
+                    <div class="drop-icon">
+                        ↑
+                    </div>
+
+                    <strong>
+                        Dosyanı buraya bırak
+                    </strong>
+
+                    <span>
+                        veya cihazından seç
+                    </span>
+
+                    <input type="file" id="contentFile">
+
+                </div>
+
+
+                <button type="submit" class="primary-button submit-button">
+                    İçeriği Paylaş
+                </button>
+
+            </form>
+
+        </div>
 
     </div>
 
-  </header>
 
 
-  <!-- HERO -->
-  <section class="hero">
+    <!-- SEARCH MODAL -->
+    <div class="modal-overlay" id="searchModal">
 
-    <div class="hero-orbit orbit-1"></div>
-    <div class="hero-orbit orbit-2"></div>
+        <div class="search-modal">
 
-    <div class="wrap hero__grid">
+            <button class="modal-close" id="closeSearch">
+                ×
+            </button>
 
-      <div class="hero__text">
+            <div class="search-large">
 
-        <div class="status">
-          <span class="status-dot"></span>
-          NOXA STUDIO ONLINE
-        </div>
+                <span>⌕</span>
 
-        <p class="eyebrow">
-          GELİŞTİRİCİ EŞLEŞTİRME PLATFORMU
-        </p>
+                <input
+                    type="text"
+                    id="searchInput"
+                    placeholder="Animasyon, script, model ara..."
+                    autocomplete="off"
+                >
 
-        <h1>
-          Projen için
-          <span>doğru ekibi</span>
-          bul.
-        </h1>
+            </div>
 
-        <p class="lede">
-          Noxa Studio; oyun, Roblox, yazılım ve yaratıcı projelerde
-          geliştiricileri bir araya getiren modern bir topluluk platformudur.
-        </p>
+            <div class="search-results" id="searchResults">
 
-        <div class="hero__actions">
+                <div class="search-empty">
+                    Aramak istediğin içeriği yaz.
+                </div>
 
-          <a href="#ilan-olustur" class="btn btn--primary">
-            <span>İlan Oluştur</span>
-            <b>→</b>
-          </a>
-
-          <a
-            href="https://discord.gg/QxwXSz8yK"
-            target="_blank"
-            rel="noopener"
-            class="btn btn--ghost"
-          >
-            Topluluğa Katıl
-          </a>
+            </div>
 
         </div>
-
-        <div class="hero-stats">
-
-          <div>
-            <strong id="postCount">0</strong>
-            <span>İlan</span>
-          </div>
-
-          <div>
-            <strong>4</strong>
-            <span>Kategori</span>
-          </div>
-
-          <div>
-            <strong>∞</strong>
-            <span>Proje</span>
-          </div>
-
-        </div>
-
-      </div>
-
-
-      <!-- CODE PANEL -->
-      <div class="hero__panel">
-
-        <div class="panel__bar">
-
-          <div class="window-buttons">
-            <span></span>
-            <span></span>
-            <span></span>
-          </div>
-
-          <small>noxa-studio.js</small>
-
-        </div>
-
-        <div class="panel__body">
-
-          <p>
-            <span class="ln">01</span>
-            <span class="purple">const</span>
-            project = {
-          </p>
-
-          <p>
-            <span class="ln">02</span>
-            &nbsp;&nbsp;team:
-            <em>"Noxa Studio"</em>,
-          </p>
-
-          <p>
-            <span class="ln">03</span>
-            &nbsp;&nbsp;status:
-            <b class="tag tag--dev">OPEN</b>
-          </p>
-
-          <p>
-            <span class="ln">04</span>
-            &nbsp;&nbsp;developers:
-            <em>∞</em>,
-          </p>
-
-          <p>
-            <span class="ln">05</span>
-            &nbsp;&nbsp;creativity:
-            <em>true</em>
-          </p>
-
-          <p>
-            <span class="ln">06</span>
-            };
-          </p>
-
-          <p class="cursor-line">
-            <span class="ln">07</span>
-            <span class="caret">_</span>
-          </p>
-
-        </div>
-
-        <div class="panel-status">
-          <span></span>
-          System operational
-        </div>
-
-      </div>
 
     </div>
 
-  </section>
 
 
-  <!-- CATEGORIES -->
-  <section class="categories" id="kategoriler">
+    <!-- FOOTER -->
+    <footer class="footer">
 
-    <div class="wrap">
+        <div class="footer-container">
 
-      <div class="section-heading">
+            <div class="footer-brand">
 
-        <div>
-          <p class="eyebrow">YETENEKLER</p>
-          <h2>Ekibini oluştur.</h2>
-        </div>
+                <a href="#" class="logo">
 
-        <p>
-          Projene uygun uzmanlığı seç ve topluluğa katıl.
-        </p>
+                    <div class="logo-mark">
+                        N
+                    </div>
 
-      </div>
+                    <span>
+                        Noxa<span class="logo-light">Studio</span>
+                    </span>
 
+                </a>
 
-      <div class="category-grid">
+                <p>
+                    Geliştiricilerin ürettiği,
+                    geliştiricilerin paylaştığı platform.
+                </p>
 
-        <button class="category-card" data-filter="ui">
-
-          <div class="category-icon">◈</div>
-
-          <div>
-            <strong>UI Designer</strong>
-            <span>Arayüz & UX</span>
-          </div>
-
-          <b>→</b>
-
-        </button>
+            </div>
 
 
-        <button class="category-card" data-filter="map">
+            <div class="footer-links">
 
-          <div class="category-icon">◇</div>
+                <div>
+                    <strong>Platform</strong>
+                    <a href="#kesfet">Keşfet</a>
+                    <a href="#animasyonlar">İçerikler</a>
+                    <a href="#kategoriler">Kategoriler</a>
+                </div>
 
-          <div>
-            <strong>Map Designer</strong>
-            <span>Harita & World Building</span>
-          </div>
+                <div>
+                    <strong>Topluluk</strong>
+                    <a href="#">Discord</a>
+                    <a href="#">Geliştiriciler</a>
+                    <a href="#">Kurallar</a>
+                </div>
 
-          <b>→</b>
+                <div>
+                    <strong>Noxa</strong>
+                    <a href="#">Hakkımızda</a>
+                    <a href="#">İletişim</a>
+                    <a href="#">Gizlilik</a>
+                </div>
 
-        </button>
-
-
-        <button class="category-card" data-filter="script">
-
-          <div class="category-icon">{ }</div>
-
-          <div>
-            <strong>Scripter</strong>
-            <span>Lua & Yazılım</span>
-          </div>
-
-          <b>→</b>
-
-        </button>
-
-
-        <button class="category-card" data-filter="animator">
-
-          <div class="category-icon">✦</div>
-
-          <div>
-            <strong>Animator</strong>
-            <span>Animasyon & Motion</span>
-          </div>
-
-          <b>→</b>
-
-        </button>
-
-      </div>
-
-    </div>
-
-  </section>
-
-
-  <!-- BOARD -->
-  <section class="board" id="pano">
-
-    <div class="wrap">
-
-      <div class="board__head">
-
-        <div>
-          <p class="eyebrow">TOPLULUK</p>
-          <h2>Pano</h2>
-        </div>
-
-        <div class="filters">
-
-          <button class="filter is-active" data-filter="all">
-            Tümü
-          </button>
-
-          <button class="filter" data-filter="dev">
-            Geliştirici Arıyorum
-          </button>
-
-          <button class="filter" data-filter="proj">
-            Proje Paylaşımı
-          </button>
+            </div>
 
         </div>
 
-      </div>
 
+        <div class="footer-bottom">
 
-      <ul class="list" id="list"></ul>
+            <span>
+                © 2026 Noxa Studio
+            </span>
 
-      <p class="empty" id="empty" hidden>
-        Henüz bu kategoride ilan yok.
-      </p>
-
-    </div>
-
-  </section>
-
-
-  <!-- CREATE POST -->
-  <section class="form-section" id="ilan-olustur">
-
-    <div class="wrap form-grid">
-
-      <div class="form-intro">
-
-        <p class="eyebrow">TOPLULUĞA KATIL</p>
-
-        <h2>
-          Bir sonraki
-          <span>projeni</span>
-          başlat.
-        </h2>
-
-        <p class="lede">
-          Projen için geliştirici arıyorsan veya kendi projenin
-          tanıtımını yapmak istiyorsan ilanını oluştur.
-        </p>
-
-        <div class="form-decoration">
-          <span></span>
-          <span></span>
-          <span></span>
-        </div>
-
-      </div>
-
-
-      <form id="post-form">
-
-        <div class="field-row">
-
-          <label>
-            <span>İlan Türü</span>
-
-            <select name="type" required>
-              <option value="dev">
-                Geliştirici Arıyorum
-              </option>
-
-              <option value="proj">
-                Proje Paylaşıyorum
-              </option>
-            </select>
-
-          </label>
-
-
-          <label>
-            <span>Kullanıcı Adı</span>
-
-            <input
-              type="text"
-              name="author"
-              placeholder="@kullaniciadi"
-              required
-            >
-
-          </label>
+            <span>
+                Built for creators.
+            </span>
 
         </div>
 
-
-        <label>
-
-          <span>Başlık</span>
-
-          <input
-            type="text"
-            name="title"
-            placeholder="Örn: Roblox FPS projesi için scripter arıyorum"
-            required
-          >
-
-        </label>
+    </footer>
 
 
-        <label>
-
-          <span>Açıklama</span>
-
-          <textarea
-            name="desc"
-            rows="5"
-            placeholder="Kısaca projeyi veya aradığın kişiyi anlat."
-            required
-          ></textarea>
-
-        </label>
-
-
-        <button type="submit" class="btn btn--primary submit-btn">
-          <span>İlanı Yayınla</span>
-          <b>→</b>
-        </button>
-
-      </form>
-
-    </div>
-
-  </section>
-
-
-  <!-- FOOTER -->
-  <footer class="footer">
-
-    <div class="wrap footer__inner">
-
-      <div>
-        <strong>Noxa<span>Studio</span></strong>
-        <small>Geliştirici topluluğu.</small>
-      </div>
-
-      <a
-        href="https://discord.gg/QxwXSz8yK"
-        target="_blank"
-        rel="noopener"
-      >
-        discord.gg/QxwXSz8yK
-      </a>
-
-      <span>
-        © 2026 Noxa Studio
-      </span>
-
-    </div>
-
-  </footer>
-
-
-  <script src="script.js"></script>
+    <script src="script.js"></script>
 
 </body>
 </html>
