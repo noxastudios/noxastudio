@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="tr" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Noxa Studios - Ana Sayfa</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <canvas id="galaxy"></canvas>
+  <header id="nav"></header>
+
+  <main>
+    <section class="hero">
+      <p class="eyebrow">Yaratıcı Stüdyo</p>
+      <h1>NOXA STUDIOS</h1>
+      <p>Yıldızların arasında yaratıyoruz. Oyunlar, videolar, pluginler ve daha fazlası; hepsi tek bir evrende.</p>
+      <div class="hero-actions">
+        <a class="btn" href="videos.html">Videoları İzle</a>
+        <a class="btn ghost" href="contact.html">İletişime Geç</a>
+      </div>
+    </section>
+
+    <div class="section-head">
+      <div>
+        <p class="eyebrow">Keşfet</p>
+        <h2>Bölümler</h2>
+        <p class="sub">Aradığın şeyi seç ve keşfetmeye başla.</p>
+      </div>
+    </div>
+
+    <div class="grid">
+      <a class="card" href="team.html" style="text-decoration:none">
+        <div class="feature-icon">👥</div>
+        <h3>Ekip</h3>
+        <p>Noxa Studios'un yaratıcı ekibi ile tanış.</p>
+        <span class="link">Ekibi gör →</span>
+      </a>
+      <a class="card" href="videos.html" style="text-decoration:none">
+        <div class="feature-icon">🎬</div>
+        <h3>Videolar</h3>
+        <p>Projelerimizden videolar. Arama yaparak hızlıca bul.</p>
+        <span class="link">Videoları izle →</span>
+      </a>
+      <a class="card" href="plugins.html" style="text-decoration:none">
+        <div class="feature-icon">🧩</div>
+        <h3>Pluginler</h3>
+        <p>Stüdyomuzun geliştirdiği araçlar ve eklentiler.</p>
+        <span class="link">Pluginleri incele →</span>
+      </a>
+      <a class="card" href="contact.html" style="text-decoration:none">
+        <div class="feature-icon">✉️</div>
+        <h3>İletişim</h3>
+        <p>İş birliği, destek veya sadece merhaba demek için.</p>
+        <span class="link">Mesaj gönder →</span>
+      </a>
+    </div>
+  </main>
+
+  <footer>© <span id="year"></span> Noxa Studios. Tüm hakları saklıdır.</footer>
+
+  <script src="js/common.js"></script>
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>

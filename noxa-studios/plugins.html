@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Noxa Studios - Pluginler</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <canvas id="galaxy"></canvas>
+  <header id="nav"></header>
+
+  <main>
+    <h2>Pluginler</h2>
+    <p class="sub">Noxa Studios'un geliştirdiği eklentiler. Her biri ayrı çalışır.</p>
+
+    <div class="grid" id="grid"></div>
+  </main>
+
+  <footer>© <span id="year"></span> Noxa Studios</footer>
+
+  <script src="js/common.js"></script>
+  <script>
+    // Plugin eklemek/değiştirmek için bu listeyi düzenle
+    const PLUGINS = [
+      {
+        name: "Noxa UI Kit",
+        version: "1.0.0",
+        desc: "Galaksi temalı hazır arayüz bileşenleri: butonlar, kartlar, pencereler.",
+        tags: ["UI", "Tasarım"],
+        link: "#"
+      },
+      {
+        name: "Noxa Starfield",
+        version: "1.2.0",
+        desc: "Arka plana eklenebilen yıldız alanı ve parıltı efektleri.",
+        tags: ["Efekt", "Arka Plan"],
+        link: "#"
+      },
+      {
+        name: "Noxa Sync",
+        version: "0.9.3",
+        desc: "Verileri tarayıcılar arası senkronize eden küçük yardımcı modül.",
+        tags: ["Veri", "Araç"],
+        link: "#"
+      }
+    ];
+
+    document.addEventListener("DOMContentLoaded", () => {
+      document.getElementById("year").textContent = new Date().getFullYear();
+      document.getElementById("grid").innerHTML = PLUGINS.map(p => `
+        <div class="card">
+          <h3>${escapeHtml(p.name)}</h3>
+          <p>${escapeHtml(p.desc)}</p>
+          <div>${p.tags.map(t => `<span class="tag">${escapeHtml(t)}</span>`).join("")}</div>
+          <p style="margin-top:12px;font-size:13px">Sürüm ${escapeHtml(p.version)}</p>
+          <a class="link" href="${escapeHtml(p.link)}">İncele / İndir →</a>
+        </div>`).join("");
+    });
+  </script>
+</body>
+</html>

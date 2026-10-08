@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Noxa Studios - İletişim</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <canvas id="galaxy"></canvas>
+  <header id="nav"></header>
+
+  <main>
+    <h2>İletişim</h2>
+    <p class="sub">Bir fikrin mi var, iş birliği mi yapmak istiyorsun? Yaz bize.</p>
+
+    <div class="contact-wrap">
+      <div class="card">
+        <div class="info-item">
+          <strong>E-posta</strong>
+          <p>info@noxastudios.com</p>
+        </div>
+        <div class="info-item">
+          <strong>Discord</strong>
+          <p>discord.gg/buraya-davet-linki</p>
+        </div>
+        <div class="info-item">
+          <strong>Çalışma Saatleri</strong>
+          <p>Hafta içi 10:00 - 18:00</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <form id="contactForm">
+          <label>Ad Soyad<input name="name" required placeholder="Adın"></label>
+          <label style="display:block;margin-top:12px">E-posta<input name="email" type="email" required placeholder="mail@ornek.com"></label>
+          <label style="display:block;margin-top:12px">Konu<input name="subject" placeholder="Mesajının konusu"></label>
+          <label style="display:block;margin-top:12px">Mesaj<textarea name="message" required placeholder="Mesajını yaz..."></textarea></label>
+          <button class="btn" type="submit">Gönder</button>
+          <p class="success" id="ok">Mesajın alındı, teşekkürler! En kısa sürede dönüş yapacağız.</p>
+        </form>
+      </div>
+    </div>
+  </main>
+
+  <footer>© <span id="year"></span> Noxa Studios</footer>
+
+  <script src="js/common.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      document.getElementById("year").textContent = new Date().getFullYear();
+
+      document.getElementById("contactForm").addEventListener("submit", e => {
+        e.preventDefault();
+        const data = Object.fromEntries(new FormData(e.target).entries());
+        data.date = new Date().toISOString();
+
+        const messages = DB.get("messages", []);
+        messages.push(data);
+        DB.set("messages", messages);
+
+        document.getElementById("ok").style.display = "block";
+        e.target.reset();
+      });
+    });
+  </script>
+</body>
+</html>

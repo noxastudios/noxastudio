@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Noxa Studios - Ekip</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <canvas id="galaxy"></canvas>
+  <header id="nav"></header>
+
+  <main>
+    <h2>Ekip</h2>
+    <p class="sub">Noxa Studios'un arkasındaki isimler.</p>
+
+    <div class="toolbar">
+      <p class="hint" id="hint"></p>
+      <button class="btn plus" id="addBtn" title="Ekip üyesi ekle" style="display:none">+</button>
+    </div>
+
+    <div class="grid" id="grid"></div>
+  </main>
+
+  <footer>© <span id="year"></span> Noxa Studios</footer>
+
+  <script src="js/common.js"></script>
+  <script>
+    const DEFAULT_TEAM = [
+      { name: "Kurucu", role: "Owner", note: "Noxa Studios'un kurucusu ve yaratıcı yönetmeni." }
+    ];
+    let team = DB.get("team", DEFAULT_TEAM);
+
+    function render() {
+      document.getElementById("grid").innerHTML = team.length
+        ? team.map((m, i) => `
+          <div class="card">
+            ${Auth.isOwner ? `<button class="del" data-i="${i}" title="Sil">×</button>` : ""}
+            <div class="avatar">${escapeHtml((m.name || "?").charAt(0).toUpperCase())}</div>
+            <h3>${escapeHtml(m.name)}</h3>
+            <p>${escapeHtml(m.note || "")}</p>
+            <span class="tag">${escapeHtml(m.role || "Üye")}</span>
+          </div>`).join("")
+        : `<div class="empty">Henüz ekip üyesi yok.</div>`;
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      document.getElementById("year").textContent = new Date().getFullYear();
+
+      const addBtn = document.getElementById("addBtn");
+      const hint = document.getElementById("hint");
+
+      if (Auth.isOwner) {
+        addBtn.style.display = "flex";
+        hint.textContent = "Owner olarak giriş yaptın. + ile yeni ekip üyesi ekleyebilirsin.";
+      } else {
+        hint.textContent = Auth.user
+          ? "Bu hesap owner değil. Ekip düzenlemek için owner Gmail hesabıyla giriş yap."
+          : "Ekip düzenlemek için owner Gmail hesabıyla giriş yap.";
+      }
+
+      addBtn.onclick = () => {
+        if (!Auth.isOwner) return;
+        openModal("Ekip Üyesi Ekle", [
+          { name: "name", label: "İsim", placeholder: "Ad Soyad", required: true },
+          { name: "role", label: "Rol", placeholder: "Örn: Developer, Tasarımcı" },
+          { name: "note", label: "Kısa not", placeholder: "Kendisi hakkında kısa bilgi", type: "textarea" }
+        ], data => {
+          team.push(data);
+          DB.set("team", team);
+          render();
+        });
+      };
+
+      document.getElementById("grid").addEventListener("click", e => {
+        const btn = e.target.closest(".del");
+        if (!btn || !Auth.isOwner) return;
+        if (confirm("Bu ekip üyesini silmek istiyor musun?")) {
+          team.splice(Number(btn.dataset.i), 1);
+          DB.set("team", team);
+          render();
+        }
+      });
+
+      render();
+    });
+  </script>
+</body>
+</html>
